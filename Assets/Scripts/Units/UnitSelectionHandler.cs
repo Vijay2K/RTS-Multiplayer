@@ -36,11 +36,14 @@ public class UnitSelectionHandler : MonoBehaviour
     }
 
     private void StartSelectionArea() {
-        foreach (Unit selectedUnit in SelectedUnits) {
-            selectedUnit.Deselect();
-        }
 
-        SelectedUnits.Clear();
+        if(!Keyboard.current.leftShiftKey.isPressed) {
+            foreach (Unit selectedUnit in SelectedUnits) {
+                selectedUnit.Deselect();
+            }
+
+            SelectedUnits.Clear();
+        }
 
         unitSelectionArea.gameObject.SetActive(true);
 
@@ -84,7 +87,9 @@ public class UnitSelectionHandler : MonoBehaviour
         Vector2 max = unitSelectionArea.anchoredPosition + (unitSelectionArea.sizeDelta / 2);
 
         foreach (Unit unit in player.GetMyUnits()) {
-            
+
+            if (SelectedUnits.Contains(unit)) continue;
+
             Vector2 screenPos = cam.WorldToScreenPoint(unit.transform.position);
             
             if(screenPos.x > min.x && screenPos.x < max.x && screenPos.y > min.y && screenPos.y < max.y) {
