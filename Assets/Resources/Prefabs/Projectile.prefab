@@ -83,6 +83,7 @@ MonoBehaviour:
   syncInterval: 0.1
   rb: {fileID: 86084620555315244}
   launchForce: 8
+  damageToDeal: 10
   destroyAfterSeconds: 5
 --- !u!1 &5963331642239210877
 GameObject:
