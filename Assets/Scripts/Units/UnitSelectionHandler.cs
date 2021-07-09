@@ -17,6 +17,11 @@ public class UnitSelectionHandler : MonoBehaviour
 
     private void Start() {
         cam = Camera.main;
+        Unit.AuthorityOnUnitDespawed += HandleAuthorityOnUnitDespawned;
+    }
+
+    private void OnDestroy() {
+        Unit.AuthorityOnUnitDespawed -= HandleAuthorityOnUnitDespawned;
     }
 
     private void Update() {
@@ -98,5 +103,9 @@ public class UnitSelectionHandler : MonoBehaviour
             }
         }
     
+    }
+
+    private void HandleAuthorityOnUnitDespawned(Unit unit) {
+        SelectedUnits.Remove(unit);
     }
 }
