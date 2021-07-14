@@ -12,6 +12,14 @@ public class UnitMovement : NetworkBehaviour
 
     #region SERVER
 
+    public override void OnStartServer() {
+        GameOverHandler.ServerOnGameOver += HandleServerOnGameOver;
+    }
+
+    public override void OnStopServer() {
+        GameOverHandler.ServerOnGameOver -= HandleServerOnGameOver;
+    }
+
     [ServerCallback]
     private void Update() {
         Targetable target = targeter.GetTarget();
@@ -39,7 +47,11 @@ public class UnitMovement : NetworkBehaviour
 
         agent.SetDestination(hit.position);
     }
-
+    
+    [Server]
+    private void HandleServerOnGameOver() {
+        agent.ResetPath();
+    }
     #endregion
 
 

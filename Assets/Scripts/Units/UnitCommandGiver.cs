@@ -13,6 +13,12 @@ public class UnitCommandGiver : MonoBehaviour
 
     private void Start() {
         cam = Camera.main;
+
+        GameOverHandler.ClientOnGameOver += HandleClientOnGameOver;
+    }
+
+    private void OnDestroy() {
+        GameOverHandler.ClientOnGameOver -= HandleClientOnGameOver;
     }
 
     private void Update() {
@@ -46,5 +52,9 @@ public class UnitCommandGiver : MonoBehaviour
         foreach(Unit unit in unitSelectionHandler.SelectedUnits) {
             unit.GetTargeter().CmdSetTarget(target.gameObject);
         }
+    }
+
+    private void HandleClientOnGameOver(string winnerName) {
+        enabled = false;
     }
 }
